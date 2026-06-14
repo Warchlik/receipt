@@ -1,10 +1,6 @@
 "use client"
 
 import * as React from "react"
-
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
@@ -12,12 +8,12 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, LifeBuoyIcon, SendIcon, FrameIcon, PieChartIcon, MapIcon, TerminalIcon, Pause } from "lucide-react"
-import ThemeButton from "./theme/ThemeButton"
 import Link from "next/link"
+import ThemeButton from "@/components/theme/ThemeButton"
+import { NavRecipes } from "../nav/NavRecipes"
+import { NavAddRecipe } from "../nav/NavAddRecipe"
 
 const data = {
   user: {
@@ -170,7 +166,7 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function ReceiptSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -191,9 +187,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* <NavMain items={data.navMain} /> */}
+        {/* <NavProjects projects={data.projects} /> */}
+        <NavRecipes projects={data.projects} />
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+        <NavAddRecipe />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

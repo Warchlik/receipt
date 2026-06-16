@@ -1,5 +1,5 @@
+import AuthProvider from "@/modules/auth/_components/AuthProvider"
 import { ReactNode } from "react"
-import AuthProvider from "./_components/AuthProvider"
 
 export default function AuthLayout({
   children

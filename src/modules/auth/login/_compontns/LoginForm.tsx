@@ -11,6 +11,7 @@ import { Link } from "lucide-react";
 import { useActionState } from "react";
 import loginAction from "../login.actins";
 import { Spinner } from "@/components/ui/spinner";
+import PaperInput from "@/components/inputs/PaperInput";
 
 
 export default function LoginForm() {
@@ -23,7 +24,7 @@ export default function LoginForm() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="email">E-mail</FieldLabel>
-            <Input
+            <PaperInput
               placeholder="Enter email..."
               id="email"
               name="email"
@@ -33,7 +34,7 @@ export default function LoginForm() {
           </Field>
           <Field>
             <FieldLabel htmlFor="password">Password</FieldLabel>
-            <Input
+            <PaperInput
               placeholder="Enter password..."
               id="password"
               name="password"

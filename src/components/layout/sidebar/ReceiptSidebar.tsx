@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { NavUser } from "@/components/nav-user"
+// import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -14,6 +14,7 @@ import Link from "next/link"
 import ThemeButton from "@/components/theme/ThemeButton"
 import { NavRecipes } from "../nav/NavRecipes"
 import { NavAddRecipe } from "../nav/NavAddRecipe"
+import { NavUser } from "../nav/NavUser"
 
 const data = {
   user: {
@@ -140,29 +141,29 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Receipts",
       url: "#",
       icon: (
         <FrameIcon
         />
       ),
     },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: (
-        <PieChartIcon
-        />
-      ),
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
-    },
+    // {
+    //   name: "Sales & Marketing",
+    //   url: "#",
+    //   icon: (
+    //     <PieChartIcon
+    //     />
+    //   ),
+    // },
+    // {
+    //   name: "Travel",
+    //   url: "#",
+    //   icon: (
+    //     <MapIcon
+    //     />
+    //   ),
+    // },
   ],
 }
 
@@ -194,7 +195,7 @@ export function ReceiptSidebar({ ...props }: React.ComponentProps<typeof Sidebar
         <NavAddRecipe />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   )

@@ -11,6 +11,7 @@ import { Link } from "lucide-react";
 import { useActionState } from "react";
 import registerAction from "../register.actions";
 import { Spinner } from "@/components/ui/spinner";
+import PaperInput from "@/components/inputs/PaperInput";
 
 
 export default function RegisterForm() {
@@ -23,7 +24,7 @@ export default function RegisterForm() {
         <FieldGroup className="flex flex-row gap-3">
           <Field>
             <FieldLabel htmlFor="email">First Name</FieldLabel>
-            <Input
+            <PaperInput
               placeholder="Enter first name..."
               id="first_name"
               name="first_name"
@@ -34,7 +35,7 @@ export default function RegisterForm() {
 
           <Field>
             <FieldLabel htmlFor="email">Last Name</FieldLabel>
-            <Input
+            <PaperInput
               placeholder="Enter last name..."
               id="last_name"
               name="last_name"
@@ -45,7 +46,7 @@ export default function RegisterForm() {
         </FieldGroup>
         <Field>
           <FieldLabel htmlFor="email">E-mail</FieldLabel>
-          <Input
+          <PaperInput
             placeholder="Enter email..."
             id="email"
             name="email"
@@ -55,7 +56,7 @@ export default function RegisterForm() {
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Phone</FieldLabel>
-          <Input
+          <PaperInput
             placeholder="Enter Phone..."
             id="phone"
             name="phone"
@@ -67,7 +68,7 @@ export default function RegisterForm() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="password">Password</FieldLabel>
-            <Input
+            <PaperInput
               placeholder="Enter password..."
               id="password"
               name="password"
@@ -77,7 +78,7 @@ export default function RegisterForm() {
           </Field>
           <Field>
             <FieldLabel htmlFor="password">Password Confirmation</FieldLabel>
-            <Input
+            <PaperInput
               placeholder="Enter password..."
               id="password_confirm"
               name="password_confirm"
@@ -92,10 +93,10 @@ export default function RegisterForm() {
             Remember Me
           </div>
 
-          <Button variant="link" className="flex flex-row items-center">
-            <Link />
-            Nie pamiętam hasła
-          </Button>
+          {/* <Button variant="link" className="flex flex-row items-center"> */}
+          {/*   <Link /> */}
+          {/*   Nie pamiętam hasła */}
+          {/* </Button> */}
         </div>
 
         <Separator className="bg-black" />

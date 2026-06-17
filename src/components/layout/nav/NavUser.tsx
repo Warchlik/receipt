@@ -22,26 +22,16 @@ import {
 } from "@/components/ui/sidebar"
 import logoutAction from "@/modules/auth/auth.actions"
 import getUser from "@/modules/dashboard/dashboard.actions"
-import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
+import { ChevronsUpDownIcon, BadgeCheckIcon, BellIcon, LogOutIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar()
   const [userData, setUserData] = useState<any>(null)
-
 
   useEffect(() => {
     getUser().then(setUserData)
   }, [])
-
 
   console.log(userData)
 
@@ -55,7 +45,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8">
-                <AvatarImage src={user.avatar} alt={userData?.user?.email ?? ""} />
+                {/* <AvatarImage src={user.avatar} alt={userData?.user?.email ?? ""} /> */}
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -74,7 +64,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
                   <AvatarFallback className="">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -86,26 +76,16 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <SparklesIcon
-                />
-                Upgrade to Pro
+                <BadgeCheckIcon />
+                Profile
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+              {/* <DropdownMenuItem> */}
+              {/*   <CreditCardIcon */}
+              {/*   /> */}
+              {/*   Billing */}
+              {/* </DropdownMenuItem> */}
               <DropdownMenuItem>
-                <BadgeCheckIcon
-                />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon
-                />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BellIcon
-                />
+                <BellIcon />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -113,8 +93,7 @@ export function NavUser({
             <DropdownMenuItem
               onSelect={logoutAction}
             >
-              <LogOutIcon
-              />
+              <LogOutIcon />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

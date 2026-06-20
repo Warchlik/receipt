@@ -29,6 +29,8 @@ export function NavUser() {
   const { isMobile } = useSidebar()
   const [userData, setUserData] = useState<any>(null)
 
+  console.log(userData)
+
   useEffect(() => {
     getUser().then(setUserData)
   }, [])

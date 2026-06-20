@@ -2,8 +2,10 @@
 
 import { db } from "@/database/drizzle-client"
 import { profiles } from "@/database/schemas/profiles"
-import { createClient } from "@/lib/supabase/server"
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
 import { redirect } from "next/navigation"
+import { APIError } from "better-auth/api"
 
 export default async function registerAction(_: unknown, formData: FormData) {
   const payload = {
@@ -11,48 +13,50 @@ export default async function registerAction(_: unknown, formData: FormData) {
     last_name: formData.get("last_name") as string,
     email: formData.get("email") as string,
     password: formData.get("password") as string,
-    password_confirmation: formData.get("password_confirmation") as string,
-    phone: formData.get("phone") as string
+    password_confirm: formData.get("password_confirm") as string,
+    phone: formData.get("phone") as string,
   }
 
-  const supabase = await createClient()
-
-  const signUpPaiload = {
-    email: payload.email,
-    password: payload.password,
-    email_confirm: true
-  }
-
-  const { data: userData, error } = await supabase.auth.signUp(signUpPaiload)
-
-  if (error) {
+  if (payload.password !== payload.password_confirm) {
     return {
-      error: error.message,
-      fields: payload
+      error: "Hasła nie są takie same",
+      fields: payload,
     }
   }
 
-  if (!userData.user) {
-    return {
-      error: "Coś jest nie tak i nie ma usera",
-      fields: payload
+  let userId: string
+
+  try {
+    const result = await auth.api.signUpEmail({
+      body: {
+        email: payload.email,
+        password: payload.password,
+        name: `${payload.first_name} ${payload.last_name}`.trim(),
+      },
+      headers: await headers(),
+    })
+
+    console.log(result)
+
+    userId = result.user.id
+  } catch (e: any) {
+    if (e instanceof APIError) {
+      return { error: e.message, fields: payload }
     }
+
+    return { error: e.message, fields: payload }
   }
 
   try {
     await db.insert(profiles).values({
-      id: userData.user.id,
-      email: payload.email,
+      id: userId,
       first_name: payload.first_name,
       last_name: payload.last_name,
-      phone: payload.phone
+      phone: payload.phone,
     })
   } catch (e) {
-    return {
-      error: "Problem z zapisaniem profilu",
-      fields: payload
-    }
+    return { error: "Problem z zapisaniem profilu", fields: payload }
   }
 
-  redirect("/auth/login")
+  redirect("/dashboard")
 }

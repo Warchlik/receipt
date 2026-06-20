@@ -1,34 +1,30 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { createClient } from './lib/supabase/server'
-import { updateSession } from './lib/supabase/middleware'
+import { getSessionCookie } from "better-auth/cookies"
 
-const ALLOWED_PREFIXES = ['/auth', '/dashboard']
+const ALLOWED_PREFIXES = ['/auth']
 
 export async function proxy(request: NextRequest) {
-  // const { pathname } = request.nextUrl
-  //
-  // const supabase = await createClient()
-  // const { data } = await supabase.auth.getUser()
-  // const user = data.user ?? null
-  //
-  //
-  // if (pathname === '/') {
-  //   return NextResponse.redirect(new URL('/dashboard', request.url))
-  // }
-  //
-  // const isAllowed = ALLOWED_PREFIXES.some(
-  //   (prefix) => pathname === prefix || pathname.startsWith(prefix + '/')
-  // )
-  //
-  // if (!isAllowed) {
-  //   return NextResponse.redirect(new URL('/auth', request.url))
-  // }
-  //
-  // return NextResponse.next()
+  const { pathname } = request.nextUrl
+  const sessionCookie = getSessionCookie(request)
 
+  const isPublic = ALLOWED_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(prefix + '/')
+  )
 
-  return await updateSession(request)
+  if (sessionCookie && pathname === '/') {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  if (sessionCookie && isPublic) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  if (!sessionCookie && !isPublic) {
+    return NextResponse.redirect(new URL('/auth/login', request.url))
+  }
+
+  return NextResponse.next()
 }
 
 export const config = {

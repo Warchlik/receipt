@@ -1,6 +1,7 @@
 import { integer, pgEnum, pgTable, primaryKey, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { profiles } from "./profiles";
 import { user } from "./auth-schema";
+import { relations } from "drizzle-orm";
 
 // table for storage receipt informations
 export const receipts = pgTable('receipts', {
@@ -37,3 +38,18 @@ export const user_receipts = pgTable("user_receipts", {
   primaryKey({ columns: [table.user_id, table.receipt_id] })
 ])
 
+
+export const receiptsRelations = relations(receipts, ({ many }) => ({
+  user_receipts: many(user_receipts)
+}))
+
+export const userReceiptsRelations = relations(user_receipts, ({ one }) => ({
+  receipt: one(receipts, {
+    fields: [user_receipts.receipt_id],
+    references: [receipts.id]
+  }),
+  user: one(user, {
+    fields: [user_receipts.user_id],
+    references: [user.id]
+  })
+}))

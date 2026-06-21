@@ -8,7 +8,6 @@ import PaperInput from "@/components/inputs/PaperInput";
 import { SeparatorWithText } from "@/components/separator-with-text";
 import { DialogClose } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
-import { Separator } from "radix-ui";
 
 export default function AddReceipeForm() {
   const [state, action, isPending] = useActionState(saveReceipe, null)
